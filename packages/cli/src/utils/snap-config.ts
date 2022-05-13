@@ -11,6 +11,10 @@ import { isSnapConfig } from './snap-config.__GENERATED__';
 export type SnapConfig = {
   cliOptions?: Record<string, unknown>;
   bundlerCustomizer?: (bundler: browserify.BrowserifyObject) => void;
+  bundlerPlugins?: {
+    before?: { name: string; opts: Record<string, unknown> }[];
+    after?: { name: string; opts: Record<string, unknown> }[];
+  };
 };
 
 let snapConfigCache: SnapConfig | undefined;

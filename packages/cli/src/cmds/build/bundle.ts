@@ -17,12 +17,17 @@ import { processDependencies, writeBundleFile } from './utils';
  * @param argv.stripComments - Whether to remove comments from code.
  * @param argv.transpilationMode - The Babel transpilation mode.
  * @param bundlerTransform
+ * @param bundlerPlugins - Plugins to add to the bundler
  */
 export function bundle(
   src: string,
   dest: string,
   argv: YargsArgs,
   bundlerTransform?: (bundler: BrowserifyObject) => void,
+  bundlerPlugins?: {
+    before?: { name: string; opts: Record<string, unknown> }[];
+    after?: { name: string; opts: Record<string, unknown> }[];
+  },
 ): Promise<boolean> {
   const { sourceMaps: debug, transpilationMode } = argv;
   const babelifyOptions = processDependencies(argv as any);
@@ -55,10 +60,22 @@ export function bundle(
 
     bundlerTransform?.(bundler);
 
+    if (bundlerPlugins?.before) {
+      for (const { name, opts } of bundlerPlugins.before) {
+        bundler.plugin(name, opts);
+      }
+    }
+
     bundler.plugin('@metamask/snaps-browserify-plugin', {
       stripComments: argv.stripComments,
       transformHtmlComments: argv.transformHtmlComments,
     });
+
+    if (bundlerPlugins?.after) {
+      for (const { name, opts } of bundlerPlugins.after) {
+        bundler.plugin(name, opts);
+      }
+    }
 
     bundler.bundle(
       async (bundleError, bundleBuffer: Buffer) =>
