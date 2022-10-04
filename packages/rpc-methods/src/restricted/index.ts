@@ -1,7 +1,6 @@
 import { PermissionConstraint } from '@metamask/permission-controller';
 import { Json } from '@metamask/utils';
 
-import { confirmBuilder, ConfirmMethodHooks } from './confirm';
 import { dialogBuilder, DialogMethodHooks } from './dialog';
 import {
   getBip32EntropyBuilder,
@@ -30,8 +29,7 @@ export { ManageStateOperation } from './manageState';
 export type { NotificationArgs } from './notify';
 export { NotificationType } from './notify';
 
-export type RestrictedMethodHooks = ConfirmMethodHooks &
-  DialogMethodHooks &
+export type RestrictedMethodHooks = DialogMethodHooks &
   GetBip32EntropyMethodHooks &
   GetBip32PublicKeyMethodHooks &
   GetBip44EntropyMethodHooks &
@@ -41,7 +39,6 @@ export type RestrictedMethodHooks = ConfirmMethodHooks &
   NotifyMethodHooks;
 
 export const restrictedMethodPermissionBuilders = {
-  [confirmBuilder.targetKey]: confirmBuilder,
   [dialogBuilder.targetKey]: dialogBuilder,
   [getBip32EntropyBuilder.targetKey]: getBip32EntropyBuilder,
   [getBip32PublicKeyBuilder.targetKey]: getBip32PublicKeyBuilder,
