@@ -12,10 +12,10 @@
     "dist/"
   ],
   "scripts": {
-    "test": "yarn test:ava && jest && yarn posttest && yarn merge:coverage",
-    "posttest": "jest-it-up --margin 0.25",
+    "test": "yarn test:ava && jest && yarn merge:coverage && yarn posttest",
+    "posttest": "node update-coverage-thresholds.js",
     "test:ava": "c8 ava",
-    "merge:coverage": "yarn mkdirp coverage-all && shx cp coverage/coverage-final.json coverage-all/coverage-final-jest.json && shx cp coverage-ava/coverage-final.json coverage-all/coverage-final-ava.json && rimraf 'coverage' 'coverage-ava' && nyc merge coverage-all coverage-merged/merged-coverage.json && nyc report -t coverage-merged --report-dir coverage --reporter=html --reporter=json-summary --reporter=json && rimraf 'coverage-merged' 'coverage-all'",
+    "merge:coverage": "yarn mkdirp coverage-all && shx cp coverage/coverage-final.json coverage-all/coverage-final-jest.json && shx cp coverage-ava/coverage-final.json coverage-all/coverage-final-ava.json && rimraf 'coverage' 'coverage-ava' && nyc merge coverage-all coverage-merged/merged-coverage.json && nyc report -t coverage-merged --report-dir coverage --reporter=text --reporter=html --reporter=json-summary --reporter=json && rimraf 'coverage-merged' 'coverage-all'",
     "test:ci": "yarn test",
     "test:watch": "jest --watch",
     "lint:eslint": "eslint . --cache --ext js,ts",

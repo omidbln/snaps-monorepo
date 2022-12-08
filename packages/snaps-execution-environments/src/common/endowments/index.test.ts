@@ -38,7 +38,7 @@ describe('Endowment utils', () => {
       const { endowments } = createEndowments(
         mockSnapAPI as any,
         mockEthereum as any,
-        ['Uint8Array'],
+        [],
       );
 
       expect(endowments).toStrictEqual({
@@ -131,18 +131,18 @@ describe('Endowment utils', () => {
       expect(endowments).toMatchObject({
         snap: mockSnapAPI,
         console,
-        Uint8Array,
+        Uint8Array: expect.any(Object),
         Math: expect.any(Object),
         setTimeout: expect.any(Function),
         clearTimeout: expect.any(Function),
-        WebAssembly,
+        WebAssembly: expect.any(Object),
       });
 
       expect(endowments.snap).toBe(mockSnapAPI);
       expect(endowments.console).toBe(console);
-      expect(endowments.Uint8Array).toBe(Uint8Array);
-      expect(endowments.WebAssembly).toBe(WebAssembly);
 
+      expect(endowments.Uint8Array).not.toBe(Uint8Array);
+      expect(endowments.WebAssembly).not.toBe(WebAssembly);
       expect(endowments.clearTimeout).not.toBe(clearTimeout);
       expect(endowments.setTimeout).not.toBe(setTimeout);
       expect(endowments.Math).not.toBe(Math);
