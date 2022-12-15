@@ -2672,7 +2672,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/rpc-methods@^0.26.2, @metamask/rpc-methods@workspace:packages/rpc-methods":
+"@metamask/rpc-methods@^0.26.2, @metamask/rpc-methods@workspace:^, @metamask/rpc-methods@workspace:packages/rpc-methods":
   version: 0.0.0-use.local
   resolution: "@metamask/rpc-methods@workspace:packages/rpc-methods"
   dependencies:
@@ -2903,6 +2903,7 @@ __metadata:
     "@metamask/object-multiplex": ^1.2.0
     "@metamask/post-message-stream": ^6.0.0
     "@metamask/providers": ^10.2.0
+    "@metamask/rpc-methods": "workspace:^"
     "@metamask/snaps-utils": ^0.26.2
     "@metamask/utils": ^3.3.1
     "@types/jest": ^27.5.1
@@ -2994,6 +2995,7 @@ __metadata:
     "@metamask/eslint-config-nodejs": ^11.0.1
     "@metamask/eslint-config-typescript": ^11.0.0
     "@metamask/providers": ^10.2.0
+    "@metamask/rpc-methods": "workspace:^"
     "@metamask/snaps-utils": ^0.26.2
     "@metamask/utils": ^3.3.1
     "@typescript-eslint/eslint-plugin": ^5.42.1
