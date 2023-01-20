@@ -34,20 +34,6 @@ describe('Endowment utils', () => {
       expect(endowments.snap).toBe(mockSnapAPI);
     });
 
-    it('handles unattenuated endowments', () => {
-      const { endowments } = createEndowments(
-        mockSnapAPI as any,
-        mockEthereum as any,
-        [],
-      );
-
-      expect(endowments).toStrictEqual({
-        snap: mockSnapAPI,
-        Uint8Array,
-      });
-      expect(endowments.Uint8Array).toBe(Uint8Array);
-    });
-
     it('handles special cases where endowment is a function but not a constructor', () => {
       const mockEndowment = () => {
         return {};

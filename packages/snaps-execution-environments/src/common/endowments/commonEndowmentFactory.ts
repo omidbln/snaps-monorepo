@@ -1,4 +1,5 @@
 import crypto from './crypto';
+import date from './date';
 import interval from './interval';
 import math from './math';
 import network from './network';
@@ -38,7 +39,6 @@ const commonEndowments: CommonEndowmentSpecification[] = [
   { endowment: Uint32Array, name: 'Uint32Array' },
   { endowment: URL, name: 'URL' },
   { endowment: WebAssembly, name: 'WebAssembly' },
-  { endowment: Date, name: 'Date' },
 ];
 
 /**
@@ -57,6 +57,7 @@ const buildCommonEndowments = (): EndowmentFactory[] => {
     timeout,
     textDecoder,
     textEncoder,
+    date,
   ];
 
   commonEndowments.forEach((endowmentSpecification) => {
