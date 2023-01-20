@@ -7,6 +7,7 @@ import FinalizationRegistry from 'globals';
 
 import buildCommonEndowments from './commonEndowmentFactory';
 import Crypto from './crypto';
+import date from './date';
 import interval from './interval';
 import math from './math';
 import network from './network';
@@ -41,6 +42,7 @@ const {
 } = interval.factory();
 const { Math: mathAttenuated } = math.factory();
 const { fetch: fetchAttenuated } = network.factory();
+const { Date: DateAttenuated } = date.factory();
 
 // All the endowments to be tested
 const testSubjects = {
@@ -126,9 +128,9 @@ const testSubjects = {
     // @ts-expect-error abort() method exists in browser
     factory: () => AbortSignal.abort(),
   },
-  Date: {
-    endowments: { Date },
-    factory: () => new Date(),
+  DateAttenuated: {
+    endowments: { DateAttenuated },
+    factory: () => new DateAttenuated(),
   },
   // --- Objects
   console: {
