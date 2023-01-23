@@ -1,5 +1,7 @@
 // eslint-disable-next-line import/no-unassigned-import
 import 'ses';
+// @ts-expect-error Walker has no types yet.
+import Walker from '@lavamoat/walker';
 import test from 'ava';
 // FinalizationRegistry will fix type errors in tests related to network endowment.
 // eslint-disable-next-line import/no-extraneous-dependencies, @typescript-eslint/no-unused-vars
@@ -11,7 +13,6 @@ import date from './date';
 import interval from './interval';
 import math from './math';
 import network from './network';
-import { walkPropertiesAndSearchForReference } from './security-utils';
 import timeout from './timeout';
 
 const globalThis = global;
@@ -22,6 +23,25 @@ lockdown({
   errorTaming: 'unsafe',
   stackFiltering: 'verbose',
 });
+
+/**
+ * Object walker test utility function.
+ *
+ * @param start - Subject to be tested.
+ * @param end - Target object.
+ * @returns True if target object is found, false otherwise.
+ */
+function walkAndSearch(start: unknown, end: unknown) {
+  let result = false;
+  const walker = new Walker(
+    (val: unknown) => {
+      return (result = result || val === end);
+    },
+    { maxRecursionLimit: 100, onShouldIgnoreError: () => true },
+  );
+  walker.walk(start);
+  return result;
+}
 
 // Retrieve registered endowments
 const registeredEndowments = buildCommonEndowments();
@@ -262,10 +282,7 @@ Object.entries(testSubjects).forEach(([name, { endowments, factory }]) => {
   if (factory()) {
     test(`endowment ${name} does not leak global this`, (expect) => {
       const instance = factory();
-      const searchResult = walkPropertiesAndSearchForReference(
-        instance,
-        globalThis,
-      );
+      const searchResult = walkAndSearch(instance, globalThis);
 
       expect.is(searchResult, false);
     });
