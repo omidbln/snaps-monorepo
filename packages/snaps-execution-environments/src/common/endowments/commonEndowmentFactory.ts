@@ -61,7 +61,7 @@ const buildCommonEndowments = (): EndowmentFactory[] => {
   ];
 
   commonEndowments.forEach((endowmentSpecification) => {
-    const en = {
+    const endowment = {
       names: [endowmentSpecification.name] as const,
       factory: () => {
         return {
@@ -69,7 +69,7 @@ const buildCommonEndowments = (): EndowmentFactory[] => {
         } as const;
       },
     };
-    endowmentFactories.push(en);
+    endowmentFactories.push(endowment);
   });
 
   return endowmentFactories;

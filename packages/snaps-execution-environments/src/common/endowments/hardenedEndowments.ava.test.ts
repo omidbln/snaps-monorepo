@@ -26,20 +26,22 @@ lockdown({
 
 /**
  * Object walker test utility function.
+ * This function will instantiate and configure @lavamoat/walker for testing
+ * endowment specific use case. It will also adapt its result to a boolean value.
  *
- * @param start - Subject to be tested.
- * @param end - Target object.
+ * @param subject - Subject to be tested.
+ * @param target - Target object.
  * @returns True if target object is found, false otherwise.
  */
-function walkAndSearch(start: unknown, end: unknown) {
+function walkAndSearch(subject: unknown, target: unknown) {
   let result = false;
   const walker = new Walker(
-    (val: unknown) => {
-      return (result = result || val === end);
+    (value: unknown) => {
+      return (result = result || value === target);
     },
     { maxRecursionLimit: 100, onShouldIgnoreError: () => true },
   );
-  walker.walk(start);
+  walker.walk(subject);
   return result;
 }
 
@@ -201,21 +203,21 @@ const testSubjects = {
 };
 
 // These are fake types just to make this test work with the TypeScript
+/* eslint-disable @typescript-eslint/naming-convention */
 type HardenedEndowmentSubject = {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   __flag: unknown;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   prototype: { __flag: unknown };
 };
+/* eslint-disable @typescript-eslint/naming-convention */
 type HardenedEndowmentInstance = {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   __flag: unknown;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   __proto__: { __flag: unknown };
 };
 
 /**
- * Test helper function.
+ * This function represents utility which is executed inside a compartment.
+ * It will try to change a subject or its prototype.
+ * Potential errors are caught and reported in an array returned.
  *
  * @param subject - Test subject (instance, object, function).
  * @param factory - Factory that creates an instance using constructor function.
@@ -251,8 +253,7 @@ function code(
     log.push(error.message);
   }
   try {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error Test unusual approach for a security reasons.
     // eslint-disable-next-line no-proto
     subject.__proto__.__flag = 'not_secure';
   } catch (error) {

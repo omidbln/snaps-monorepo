@@ -2950,7 +2950,6 @@ __metadata:
     jest: ^29.0.2
     jest-environment-jsdom: ^29.0.2
     jest-fetch-mock: ^3.0.3
-    jest-it-up: ^2.0.0
     jsdom: ^19.0.0
     json-rpc-engine: ^6.1.0
     mkdirp: ^1.0.4

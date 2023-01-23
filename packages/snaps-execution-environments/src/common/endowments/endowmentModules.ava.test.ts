@@ -16,6 +16,6 @@ lockdown({
 
 const modules = buildCommonEndowments();
 
-test('Endowments modules have expected properties', (expect) => {
+test('endowments modules have expected properties', (expect) => {
   expect.snapshot(modules);
 });
