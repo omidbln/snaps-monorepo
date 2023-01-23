@@ -208,11 +208,11 @@ type HardenedEndowmentSubject = {
   __flag: unknown;
   prototype: { __flag: unknown };
 };
-/* eslint-disable @typescript-eslint/naming-convention */
 type HardenedEndowmentInstance = {
   __flag: unknown;
   __proto__: { __flag: unknown };
 };
+/* eslint-enable @typescript-eslint/naming-convention */
 
 /**
  * This function represents utility which is executed inside a compartment.
@@ -266,8 +266,7 @@ Object.entries(testSubjects).forEach(([name, { endowments, factory }]) => {
   test(`hardening protects ${name}`, (expect) => {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     const source = `;(${code})(${name},${factory})`;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error Indexing error is expected (endowment structure should be enough).
     const subject = endowments[name];
     const c1 = new Compartment(endowments, {}, {});
     const errors = c1.evaluate(source);

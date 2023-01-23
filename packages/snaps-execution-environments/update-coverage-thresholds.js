@@ -16,10 +16,14 @@ const nycConfig = require('./nyc.config');
  * @returns {number} A number rounded to two decimals.
  */
 function getRoundedFloat(value) {
-  return Math.round(value * 100) / 100;
+  return value.toFixed(2);
 }
 
-(async () => {
+/**
+ * This function will check coverage reports at the final stage and do update
+ * of the coverage thresholds if they're improved by latest changes.
+ */
+async function checkCoverage() {
   console.log('Checking and updating coverage thresholds...');
 
   // Read current coverage report
@@ -73,4 +77,6 @@ module.exports = {
   } else {
     console.log('No changes detected to coverage thresholds.');
   }
-})();
+}
+
+checkCoverage().catch(console.error);
